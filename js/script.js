@@ -39,7 +39,7 @@ async function TimKiem(){
 
         city.innerHTML = `${location.name} - ${current.temp_c}°C - ${current.condition.text} ☀️`;
         today.innerHTML = `Hôm nay: ${forecast[0].day.mintemp_c}°C / ${forecast[0].day.maxtemp_c}°C`;
-        details.innerHTML = `Độ ẩm: ${current.humidity}% | Gió: ${current.wind_kph} km/h`;
+        detail.innerHTML = `Độ ẩm: ${current.humidity}% | Gió: ${current.wind_kph} km/h`;
     
         // Dự báo theo giờ
         const hours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,  12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
