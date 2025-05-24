@@ -1,33 +1,13 @@
 body {
-  font-family: "Roboto", sans-serif;
-  background-color: #f8f9fa;
+  font-family: 'Segoe UI', sans-serif;
 }
-.weather-card {
-  background-color: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
+
+#forecast .card {
+  background: #f0f8ff;
+  border: none;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
-.scroll-x {
-  overflow-x: auto;
-  white-space: nowrap;
-}
-.hourly-item {
-  display: inline-block;
-  width: 120px;
-  text-align: center;
-  margin-right: 10px;
-  background-color: #eef2f7;
-  padding: 10px;
-  border-radius: 8px;
-}
-.daily-item {
-  display: inline-block;
-  width: 140px;
-  text-align: center;
-  margin-right: 10px;
-  background-color: #eef2f7;
-  padding: 10px;
-  border-radius: 8px;
+
+#forecast .card h5 {
+  font-weight: bold;
 }
