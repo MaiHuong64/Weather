@@ -99,6 +99,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // Ẩn phần dành cho khách
     guestLinks.classList.add("d-none");
     userDropdown.classList.remove("d-none");
+    savedLocations.classList.remove("d-none");   
+    saveLocationBtn.classList.remove("d-none");
+    guestReminder.classList.add("d-none"); 
+
     userName.textContent = email;
 
     if (role === "admin") {
@@ -108,6 +112,12 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       console.log("Chao nguoi dung");
     }
+  } else {
+    guestLinks.classList.remove("d-none");
+    userDropdown.classList.add("d-none");
+    savedLocations.classList.add("d-none");
+    guestReminder.classList.remove("d-none");
+   saveLocationBtn.classList.add("d-none");
   }
 
   //Đăng xuất
