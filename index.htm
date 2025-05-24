@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dự báo thời tiết</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+  <div class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <input type="text" id="timkiem" class="form-control w-50 me-2" placeholder="Nhập tên thành phố...">
+      <button class="btn btn-primary me-2" onclick="TimKiem()">Tìm kiếm</button>
+      <button class="btn btn-outline-secondary" onclick="doiDonVi()">°C / °F</button>
+    </div>
+
+    <div class="weather-card">
+      <h5 id="city"></h5>
+      <p id="today"></p>
+      <p id="details"></p>
+    </div>
+
+    <div class="weather-card">
+        <h6>⏰ Theo giờ</h6>
+      <div id="hourly-forecast" class="d-flex flex-row overflow-auto px-2 py-3"></div>
+    </div>
+
+    
+    <div class="weather-card">
+      <h6>📅 Theo ngày</h6>
+      <div id="daily-forecast" class="scroll-x d-flex overflow-auto"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
