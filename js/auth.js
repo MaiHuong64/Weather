@@ -5,6 +5,13 @@ import {
 } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 import { signOut } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 
+import {
+  getFirestore,
+  setDoc,
+  getDoc,
+  doc,
+} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+
 document.addEventListener("DOMContentLoaded", () => {
   const signup = document.getElementById("registerForm");
   const login = document.getElementById("loginForm");
@@ -22,8 +29,23 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
       try {
-        await createUserWithEmailAndPassword(auth, email, password);
-        alert("Đăng ký thành công");
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        const user = userCredential.user;
+
+        // Lưu thông tin đăng ký
+        const db = getFirestore();
+
+        await setDoc(doc(db, "user", user.uid), {
+          avatar: "avatar",
+          email: user.email,
+          role: "user",
+        });
+        await signOut(auth);
+        alert("Đăng ký thành công!");
         window.location.href = "login.html";
       } catch (error) {
         alert(`Lỗi: ${error.message}`);
@@ -40,12 +62,21 @@ document.addEventListener("DOMContentLoaded", () => {
       const password = document.getElementById("password").value;
       try {
         await signInWithEmailAndPassword(auth, email, password).then(
-          (userCredential) => {
+          async (userCredential) => {
             const user = userCredential.user;
-            if (user !== null) {
+
+            const db = getFirestore();
+            // Kiểm tra role
+            const docRef = doc(db, "user", user.uid);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+              const userData = docSnap.data();
+              const role = userData.role;
               setCookie("uid", user.uid, 14);
               setCookie("email", user.email, 14);
               setCookie("displayName", user.displayName, 14);
+              setCookie("role", role, 14);
               window.location.href = "../index.html";
             }
           }
@@ -58,6 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const uid = getCookie("uid");
   const email = getCookie("email");
+  const role = getCookie("role");
 
   const guestLinks = document.getElementById("guestLinks");
   const userDropdown = document.getElementById("userDropdown");
@@ -68,6 +100,14 @@ document.addEventListener("DOMContentLoaded", () => {
     guestLinks.classList.add("d-none");
     userDropdown.classList.remove("d-none");
     userName.textContent = email;
+
+    if (role === "admin") {
+      if (!window.location.href.includes("index.html")) {
+        window.location.href = "../index.html";
+      }
+    } else {
+      console.log("Chao nguoi dung");
+    }
   }
 
   //Đăng xuất
@@ -78,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
         deleteCookie("uid");
         deleteCookie("email");
         deleteCookie("displayName");
-
+        deleteCookie("role");
         window.location.href = "login.html";
       } catch (error) {
         alert(`Lỗi khi đăng xuất: ${error.message}`);

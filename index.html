@@ -17,22 +17,12 @@
    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
       <div class="container">
         <a class="navbar-brand fw-bold" href="#">🌤️ Thời tiết</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarContent"
-          aria-controls="navbarContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+        <button  class="navbar-toggler"  data-bs-toggle="collapse"data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
 
         <div
-          class="collapse navbar-collapse justify-content-end"
-          id="navbarContent"
-        >
+          class="collapse navbar-collapse justify-content-end"id="navbarContent" >
           <!-- Nếu chưa đăng nhập -->
           <div id="guestLinks" class="d-flex gap-2">
             <a href="login.html" class="btn btn-outline-primary">Đăng nhập</a>
@@ -41,19 +31,10 @@
 
           <!-- Nếu đã đăng nhập -->
           <div id="userDropdown" class="dropdown d-none">
-            <button
-              class="btn btn-secondary dropdown-toggle"
-              type="button"
-              id="dropdownMenuButton"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
+            <button class="btn btn-secondary dropdown-toggle" type="button"id="dropdownMenuButton" data-bs-toggle="dropdown"aria-expanded="false" >
               <span id="userName">Người dùng</span>
             </button>
-            <ul
-              class="dropdown-menu dropdown-menu-end"
-              aria-labelledby="dropdownMenuButton"
-            >
+            <ul  class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
               <li><a class="dropdown-item" href="#">Tài khoản của tôi</a></li>
               <li><hr class="dropdown-divider" /></li>
               <li>
@@ -72,15 +53,8 @@
         <div class="row justify-content-center mb-4">
           <div class="col-md-10">
             <div class="input-group">
-              <input
-                type="text"
-                id="timkiem"
-                class="form-control"
-                placeholder="Nhập tên thành phố..."
-              />
-              <button class="btn btn-primary" onclick="TimKiem()">
-                Tìm kiếm
-              </button>
+              <input type="text" id="timkiem" class="form-control" placeholder="Nhập tên thành phố..." />
+              <button class="btn btn-primary" onclick="TimKiem()"> Tìm kiếm </button>
               <button class="btn btn-outline-secondary" onclick="doiDonVi()">
                 °C / °F
               </button>
