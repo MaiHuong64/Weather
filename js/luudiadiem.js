@@ -21,7 +21,7 @@ async function LuuDiaDiem() {
   const userRef = doc(db, "user", user.uid);
   try {
     setDoc(userRef, { location: arrayUnion(cityName) }, { merge: true });
-       alert("Lưu địa điêm thành công");
+       alert("Lưu địa điểm thành công");
   } catch (error) {
     alert(error);
   }
