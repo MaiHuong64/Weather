@@ -3,10 +3,10 @@ import { auth } from "./config.js";
 import {
   getFirestore,
   setDoc,
-  getDoc,
   doc,
   arrayUnion,
 } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+
 
 const db = getFirestore(app);
 
@@ -26,8 +26,6 @@ async function LuuDiaDiem() {
     alert(error);
   }
 }
-
-async function LayDanhSachDiaDiem() {}
 
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("saveLocationBtn").addEventListener("click", () => {
