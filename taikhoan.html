@@ -61,13 +61,13 @@
       <h4 class="text-center mb-4">👤 Tài khoản của tôi</h4>
       <form id="accountForm">
         <div class="mb-4 text-center">
-          <img id="previewAvatar" src="https://via.placeholder.com/100" alt="Avatar" />
+          <img id="previewAvatar"src="" alt="Avatar" />
           <input type="file" id="avatarInput" class="form-control mt-2" accept="image/*">
         </div>
 
         <div class="mb-3">
-          <label for="displayName" class="form-label">Tên hiển thị</label>
-          <input type="text" class="form-control" id="displayName" placeholder="Tên của bạn" required>
+          <label for="name" class="form-label">Tên hiển thị</label>
+          <input type="text" class="form-control" id="name" placeholder="Tên của bạn" required>
         </div>
 
         <div class="mb-3">
@@ -80,33 +80,33 @@
     </div>
   </div>
 
-  <!-- Scripts -->
-  <script>
-    // Hiển thị ảnh đại diện khi chọn file
-    document.getElementById("avatarInput").addEventListener("change", function (e) {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          document.getElementById("previewAvatar").src = e.target.result;
+  <script type="module">
+    import { auth } from "../js/config.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+    document.getElementById('avatarInput').addEventListener("change", function (e){
+      const file = e.target.file[0];
+      if(file){
+        const render = new FileReader();
+        render.onload = function (e){
+          document.getElementById('previewAvatar').src=e.target.result;
         };
-        reader.readAsDataURL(file);
+        render.readAsDataURL(file);
       }
     });
 
-    // Giả lập dữ liệu hiện tại
-    window.onload = function () {
-      document.getElementById("displayName").value = "Loan Chau";
-      document.getElementById("email").value = "loan@example.com";
-    };
-
-    // Gửi form cập nhật
-    document.getElementById("accountForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const name = document.getElementById("displayName").value;
-      alert(`✅ Đã lưu tên mới: ${name}`);
-      // TODO: Gửi dữ liệu cập nhật lên backend hoặc Firebase
-    });
+    onAuthStateChanged(auth, (user)=>{
+      if(user){
+        console.log(user);
+        document.getElementById("name").value = user.displayName;
+        document.getElementById('email').value = user.email;
+        if(user.photoURL){
+          document.getElementById('previewAvatar').src= user.photoURL;
+        }
+      }
+      else{
+        alert("Vui lòng đăng nhập để xem thông tin tài khoản.");
+      }
+    })
   </script>
 </body>
 </html>

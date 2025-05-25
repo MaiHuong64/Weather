@@ -1,8 +1,13 @@
 import { auth } from "./config.js";
-import {createUserWithEmailAndPassword,signInWithEmailAndPassword,} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 import { signOut } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 
-import {getFirestore, setDoc, getDoc, doc,} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+import {
+  getFirestore,
+  setDoc,
+  getDoc,
+  doc,
+} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const signup = document.getElementById("registerForm");
@@ -13,26 +18,29 @@ document.addEventListener("DOMContentLoaded", () => {
   if (signup) {
     signup.addEventListener("submit", async (e) => {
       e.preventDefault();
+
+      const name = document.getElementById("name").value;
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
       const confirmPassword = document.getElementById("confirmPassword").value;
-      if (email == "" || password == "" || password != confirmPassword) {
+      if ( name == "" ||email == "" ||password == "" ||password !== confirmPassword) {
         alert("Thông tin đăng ký không hợp lệ");
         return;
       }
       try {
-        const userCredential = await createUserWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
+        
+        const userCredential = await createUserWithEmailAndPassword( auth, email, password);
         const user = userCredential.user;
+        
+        await updateProfile(user, {
+          displayName: name,
+        }); 
 
         // Lưu thông tin đăng ký
         const db = getFirestore();
-
         await setDoc(doc(db, "user", user.uid), {
           avatar: "avatar",
+          name: name,
           email: user.email,
           role: "user",
         });
@@ -67,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
               const role = userData.role;
               setCookie("uid", user.uid, 14);
               setCookie("email", user.email, 14);
-              setCookie("displayName", user.displayName, 14);
+              setCookie("name", user.name, 14);
               setCookie("role", role, 14);
               window.location.href = "../index.html";
             }
@@ -91,9 +99,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Ẩn phần dành cho khách
     guestLinks.classList.add("d-none");
     userDropdown.classList.remove("d-none");
-    // savedLocations.classList.remove("d-none");   
+    // savedLocations.classList.remove("d-none");
     saveLocationBtn.classList.remove("d-none");
-    // guestReminder.classList.add("d-none"); 
+    // guestReminder.classList.add("d-none");
 
     userName.textContent = email;
 
@@ -109,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
     userDropdown.classList.add("d-none");
     // savedLocations.classList.add("d-none");
     // guestReminder.classList.remove("d-none");
-   saveLocationBtn.classList.add("d-none");
+    saveLocationBtn.classList.add("d-none");
   }
 
   //Đăng xuất
@@ -119,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
         await signOut(auth);
         deleteCookie("uid");
         deleteCookie("email");
-        deleteCookie("displayName");
+        deleteCookie("name");
         deleteCookie("role");
         window.location.href = "login.html";
       } catch (error) {
