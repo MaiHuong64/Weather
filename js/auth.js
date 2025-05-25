@@ -1,16 +1,8 @@
 import { auth } from "./config.js";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+import {createUserWithEmailAndPassword,signInWithEmailAndPassword,} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 import { signOut } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 
-import {
-  getFirestore,
-  setDoc,
-  getDoc,
-  doc,
-} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+import {getFirestore, setDoc, getDoc, doc,} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const signup = document.getElementById("registerForm");
@@ -99,9 +91,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Ẩn phần dành cho khách
     guestLinks.classList.add("d-none");
     userDropdown.classList.remove("d-none");
-    savedLocations.classList.remove("d-none");   
+    // savedLocations.classList.remove("d-none");   
     saveLocationBtn.classList.remove("d-none");
-    guestReminder.classList.add("d-none"); 
+    // guestReminder.classList.add("d-none"); 
 
     userName.textContent = email;
 
@@ -115,8 +107,8 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
     guestLinks.classList.remove("d-none");
     userDropdown.classList.add("d-none");
-    savedLocations.classList.add("d-none");
-    guestReminder.classList.remove("d-none");
+    // savedLocations.classList.add("d-none");
+    // guestReminder.classList.remove("d-none");
    saveLocationBtn.classList.add("d-none");
   }
 

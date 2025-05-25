@@ -1,14 +1,41 @@
 body {
-  font-family: 'Segoe UI', sans-serif;
-  transition: background-color 0.6s ease-in-out;
+  font-family: "Poppins", sans-serif;
+  background-color: #e0f7fa;
+  color: #333;
 }
 
-#forecast .card {
-  background: #f0f8ff;
-  border: none;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+.navbar {
+  background-color: #b2ebf2 !important;
 }
 
-#forecast .card h5 {
+.weather-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.weather-card h5 {
+  font-weight: 600;
+}
+
+.btn-primary {
+  background-color: #00acc1;
+  border-color: #00acc1;
+}
+
+.btn-primary:hover {
+  background-color: #00838f;
+  border-color: #00838f;
+}
+
+#city {
+  font-size: 1.8rem;
   font-weight: bold;
+  color: #007c91;
+}
+
+footer {
+  background-color: #b2ebf2;
 }
