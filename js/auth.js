@@ -106,9 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
     userName.textContent = email;
 
     if (role === "admin") {
-      if (!window.location.href.includes("index.html")) {
-        window.location.href = "../index.html";
-      }
+        window.location.href = "../admin.html";
     } else {
       console.log("Chao nguoi dung");
     }
