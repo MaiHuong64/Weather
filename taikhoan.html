@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tài khoản của tôi</title>
+  <title>Tài khoản của tôi - Lavender Weather</title>
 
   <!-- Bootstrap + Google Font -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -15,29 +15,39 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    .card-profile {
-      background-color: #ffffff;
-      border-radius: 15px;
-      padding: 30px;
-      max-width: 600px;
-      margin: 60px auto;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    .navbar {
+      background-color: #b2ebf2 !important;
     }
 
-    .card-profile h4 {
-      color: #007c91;
+    .card-profile {
+      background-color: #ffffff;
+      border-radius: 16px;
+      padding: 2.5rem;
+      max-width: 600px;
+      margin: 60px auto;
+      box-shadow: 0 8px 20px rgba(0, 172, 193, 0.1);
+    }
+
+    h4 {
+      color: #00acc1;
       font-weight: 600;
+      text-align: center;
+      margin-bottom: 1.5rem;
     }
 
     .form-control {
       border-radius: 10px;
     }
 
+    .form-label {
+      font-weight: 500;
+    }
+
     .btn-save {
       background-color: #00acc1;
       border: none;
       color: #fff;
-      font-weight: bold;
+      font-weight: 500;
       border-radius: 10px;
     }
 
@@ -46,33 +56,45 @@
     }
 
     #previewAvatar {
-      width: 100px;
-      height: 100px;
+      width: 400px;
+      height: 400px;
       border-radius: 50%;
       border: 3px solid #00bcd4;
       object-fit: cover;
+      box-shadow: 0 4px 8px rgba(0, 188, 212, 0.2);
     }
   </style>
 </head>
 
-<body>
-  <div class="container">
+<body class="d-flex flex-column min-vh-100">
+  <!-- Navbar giống index.html -->
+  <nav class="navbar navbar-expand-lg navbar-light border-bottom">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-primary" href="index.html">🌤️ Thời tiết</a>
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  </nav>
+
+  <!-- Main content -->
+  <div class="container flex-fill">
     <div class="card-profile">
-      <h4 class="text-center mb-4">👤 Tài khoản của tôi</h4>
+      <h4>👤 Tài khoản của tôi</h4>
       <form id="accountForm">
         <div class="mb-4 text-center">
-          <img id="previewAvatar"src="" alt="Avatar" />
-          <input type="file" id="avatarInput" class="form-control mt-2" accept="image/*">
+          <img id="previewAvatar" src="https://via.placeholder.com/100" alt="Avatar" />
+          <input type="file" id="avatarInput" class="form-control mt-3" />
         </div>
 
         <div class="mb-3">
           <label for="name" class="form-label">Tên hiển thị</label>
-          <input type="text" class="form-control" id="name" placeholder="Tên của bạn" required>
+          <input type="text" class="form-control" id="name" placeholder="Tên của bạn" required />
         </div>
 
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" disabled>
+          <input type="email" class="form-control" id="email" disabled />
         </div>
 
         <button type="submit" class="btn btn-save w-100 mt-3">💾 Lưu thay đổi</button>
@@ -80,33 +102,16 @@
     </div>
   </div>
 
-  <script type="module">
-    import { auth } from "../js/config.js";
-    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
-    document.getElementById('avatarInput').addEventListener("change", function (e){
-      const file = e.target.file[0];
-      if(file){
-        const render = new FileReader();
-        render.onload = function (e){
-          document.getElementById('previewAvatar').src=e.target.result;
-        };
-        render.readAsDataURL(file);
-      }
-    });
+  <!-- Footer -->
+  <footer class="text-center py-3 mt-auto border-top bg-light">
+    <div class="container">
+      <p class="mb-0">&copy; 2025 Lavender Weather. Mọi quyền được bảo lưu.</p>
+    </div>
+  </footer>
 
-    onAuthStateChanged(auth, (user)=>{
-      if(user){
-        console.log(user);
-        document.getElementById("name").value = user.displayName;
-        document.getElementById('email').value = user.email;
-        if(user.photoURL){
-          document.getElementById('previewAvatar').src= user.photoURL;
-        }
-      }
-      else{
-        alert("Vui lòng đăng nhập để xem thông tin tài khoản.");
-      }
-    })
-  </script>
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="js/taikhoan.js"></script>
+  <script type="module" src="js/auth.js"></script>
 </body>
 </html>
