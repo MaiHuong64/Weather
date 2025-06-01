@@ -1,0 +1,43 @@
+body {
+  background: linear-gradient(to right, #e0f7fa, #ffffff);
+  font-family: "Poppins", sans-serif;
+}
+
+.register-form {
+  background: #ffffff;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 172, 193, 0.2);
+  max-width: 400px;
+  width: 100%;
+}
+
+h3 {
+  color: #00acc1;
+  font-weight: 600;
+}
+
+.form-control::placeholder {
+  font-style: italic;
+  color: #bbb;
+}
+
+.btn-primary {
+  background-color: #00acc1;
+  border-color: #00acc1;
+  font-weight: 500;
+}
+
+.btn-primary:hover {
+  background-color: #00838f;
+  border-color: #00838f;
+}
+
+a {
+  color: #00acc1;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
