@@ -9,7 +9,6 @@
   </head>
 
   <body class="d-flex flex-column min-vh-100">
-    <!-- Navbar tái sử dụng -->
     <nav class="navbar navbar-light bg-light border-bottom px-3">
       <a href="index.html" class="navbar-brand fw-bold text-primary">🌤️ Thời tiết</a>
     </nav>
@@ -17,13 +16,8 @@
     <main class="flex-fill py-4">
       <div class="container">
         <h3 class="mb-4">📍 Danh sách địa điểm đã lưu</h3>
-
-        <!-- Danh sách địa điểm -->
-        <ul id="savedLocationsList" class="list-group">
-          <!-- Các địa điểm sẽ được render tại đây -->
-        </ul>
-
-        <p id="noLocations" class="text-muted mt-3 d-none">Bạn chưa lưu địa điểm nào.</p>
+        <ul id="savedLocationsList" class="list-group"></ul>
+        <p id="noLocations" class="text-muted mt-3 d-none">Bạn chưa lưu địa điểm nào</p>
       </div>
     </main>
 
@@ -32,6 +26,7 @@
         <p class="mb-0">&copy; 2025 Dự báo thời tiết</p>
       </div>
     </footer>
+    
   </body>
   <script type="module" src="js/lay_danhsach_diadiem.js"></script>
 </html>

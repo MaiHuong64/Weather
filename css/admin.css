@@ -1,0 +1,84 @@
+:root {
+  --bg: #f4f6f9;
+  --text: #222;
+  --sidebar-bg: #d6d5f5;
+  --sidebar-text: #333;
+  --sidebar-active: #bdbaf4;
+  --card-bg: #ffffff;
+}
+
+body.dark {
+  --bg: #1e1e2f;
+  --text: #eee;
+  --sidebar-bg: #2f2f4f;
+  --sidebar-text: #ccc;
+  --sidebar-active: #49497c;
+  --card-bg: #2b2b3d;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  margin: 0;
+}
+
+.sidebar {
+  height: 100vh;
+  background-color: var(--sidebar-bg);
+  padding: 1.5rem;
+  color: var(--sidebar-text);
+}
+
+.sidebar h4 {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.sidebar a {
+  display: block;
+  color: var(--sidebar-text);
+  margin: 0.75rem 0;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+  background-color: var(--sidebar-active);
+  color: var(--text);
+}
+
+.main {
+  padding: 2rem;
+}
+
+.section {
+  display: none;
+}
+
+.section.active {
+  display: block;
+}
+
+.table,
+.table thead {
+  background-color: var(--card-bg);
+  color: var(--text);
+}
+
+.theme-toggle {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.btn-theme {
+  font-size: 0.9rem;
+  background: transparent;
+  border: 1px solid #888;
+  border-radius: 6px;
+  padding: 4px 12px;
+  color: inherit;
+  cursor: pointer;
+}
