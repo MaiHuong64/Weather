@@ -49,27 +49,27 @@ async function LayDanhSach(user) {
   }
 }
 
-// document.addEventListener("DOMContentLoaded", async () => {
-//   onAuthStateChanged(auth, async (user) => {
-//     if (!user) {
-//       alert("Vui lòng đăng nhập để xem các địa điểm đã lưu.");
-//          window.location.href = "login.html";
-//     }
-//       const locations = await LayDanhSach(user);
-//       const list = document.getElementById("savedLocationsList");
-//       const nolocation = document.getElementById("noLocations");
+document.addEventListener("DOMContentLoaded", async () => {
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      alert("Vui lòng đăng nhập để xem các địa điểm đã lưu.");
+         window.location.href = "login.html";
+    }
+      const locations = await LayDanhSach(user);
+      const list = document.getElementById("savedLocationsList");
+      const nolocation = document.getElementById("noLocations");
 
-//       if (locations.length === 0) {
-//         nolocation.classList.remove("d-none");
-//       } else {
-//         locations.forEach((location) => {
-//           const li = document.createElement("li");
-//           li.className = "list-group-item";
-//           li.textContent = location;
-//           list.appendChild(li);
-//         });
-//       }
-//   });
-// });
+      if (locations.length === 0) {
+        nolocation.classList.remove("d-none");
+      } else {
+        locations.forEach((location) => {
+          const li = document.createElement("li");
+          li.className = "list-group-item";
+          li.textContent = location;
+          list.appendChild(li);
+        });
+      }
+  });
+});
 
 export { LuuDiaDiem, LayDanhSach };
