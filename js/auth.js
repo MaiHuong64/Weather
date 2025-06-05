@@ -1,35 +1,39 @@
-import { auth } from "./config.js";
-import {createUserWithEmailAndPassword,signInWithEmailAndPassword, updateProfile,} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
-import { signOut } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+function checkLogin(uid, email, role) {
 
-import { getFirestore, setDoc,  getDoc,  doc} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+  console.log(uid, email, role);
+  
+  const guestLinks = document.getElementById("guestLinks");
+  const userDropdown = document.getElementById("userDropdown");
+  const userName = document.getElementById("userName");
+ 
+  console.log("guestLinks", guestLinks);
+  console.log("userDropdown", userDropdown);
+  console.log("userName", userName);
 
-import { getCookie } from "./cookie.js";
+  if (uid === null || email === null || role === null) 
+  {
+    guestLinks.classList.remove("d-none");
+    userDropdown.classList.add("d-none");
+    return;
+  } 
 
-document.addEventListener("DOMContentLoaded", () => {
+  if (role === "admin") 
+  {
+    if (window.location.pathname !== "/admin.html") 
+      window.location.href = "/admin.html";
+  } 
+  else if( role === "user"){
+    guestLinks?.classList.add("d-none");
+    userDropdown?.classList.remove("d-none");
+    if(userName) userName.textContent = email;
+    if (window.location.pathname !== "/index.html") 
+      window.location.href = "/index.html";
+  }
+  else
+  {
+    guestLinks?.classList.remove("d-none");
+    userDropdown?.classList.add("d-none");
+  }
+};
 
-    const guestLinks = document.getElementById("guestLinks");  
-    const userDropdown = document.getElementById("userDropdown");
-
-    const uid = getCookie("uid");
-    const email = getCookie("email");
-    const role = getCookie("role");
-    console.log(uid, email, role);
-
-    if (uid === null || email === null || role === null) {
-        guestLinks.classList.remove("d-none");
-        userDropdown.classList.add("d-none");
-        }
-    else if(uid){
-        if(role === "admin"){
-            if(window.location.pathname !== "/admin.html"){
-                window.location.href = "/admin.html";
-            }
-        }
-        else{
-            document.getElementById("userName").textContent = email;
-            guestLinks.classList.add("d-none");
-            userDropdown.classList.remove("d-none");
-        }
-    }
-    });
+export { checkLogin };

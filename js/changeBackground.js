@@ -1,3 +1,10 @@
+const city = document.getElementById("city");
+const error = document.getElementById("error");
+const today = document.getElementById("today");
+const detail = document.getElementById("details");
+const hourlyForecast = document.getElementById("hourly-forecast");
+const dailyForecast = document.getElementById("daily-forecast");
+
 function clear() {
   city.innerHTML = "";
   today.innerHTML = "";
@@ -47,10 +54,10 @@ function getWeatherColor(weatherText) {
     Haze: "#CFD8DC",
     Default: "#FFFFFF",
   };
-  colorMap.forEach((color) => {
-    if (weatherText.toLowerCase().includes(key.toLowerCase())) return map[key];
-  });
-  return "#FFFFFF";
+  // colorMap.forEach((color) => {
+  //   if (weatherText.toLowerCase().includes(key.toLowerCase())) return map[key];
+  // });
+  // return "#FFFFFF";
 }
 function createLocationCard(city, weatherType, temp) {
   const card = document.createElement("div");
@@ -66,3 +73,4 @@ function createLocationCard(city, weatherType, temp) {
   document.getElementById("savedLocations").appendChild(card);
 }
 
+export { clear, displayWeather, changeBackGround, getWeatherColor, createLocationCard}; 
