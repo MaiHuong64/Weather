@@ -4,7 +4,9 @@ import { signOut } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth
 
 import { getFirestore, setDoc,  getDoc,  doc} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 
-import { setCookie, deleteCookie } from "./cookie.js"; 
+import { setCookie, getCookie, deleteCookie } from "./cookie.js"; 
+
+import { checkLogin } from "./auth.js"; 
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -37,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
           avatar: "avatar",
           name: name,
           email: user.email,
-          role: "user", // Mặc định là user
+          role: "user",
         });
         await signOut(auth);
           alert("Đăng ký thành công!");
@@ -59,33 +61,34 @@ document.addEventListener("DOMContentLoaded", () => {
             const user = userCredential.user;
 
             const db = getFirestore();
-            // Kiểm tra role
             const docRef = doc(db, "user", user.uid);
             const docSnap = await getDoc(docRef);
 
             if (docSnap.exists()) {
               const userData = docSnap.data();
-              const role = userData.role;
-              // Cập nhật cookie
+            
               setCookie("uid", user.uid, 14);
               setCookie("email", user.email, 14);
-              setCookie("name", userData.name, 14);
-              setCookie("role", role, 14);
-
-              window.location.href = role === "admin" ? "../admin.html" : "../index.html";
-              console.log("uid:", user.uid);
-              console.log("email:", user.email);
-              console.log("name:", userData.name);
-              console.log("role:", role);
+              setCookie("name", userData.displayName, 14);
+              setCookie("role", userData.role, 14);
+    
+              console.log("Cookie check:",  user.uid,  user.email, userData.role); 
               
+              const uid = getCookie("uid");
+              const email = getCookie("email");
+              const role = getCookie("role");
+
+              checkLogin( uid, email, role);
+              alert("Đăng nhập thành công!");    
             }
           }
         );
       } catch (error) {
-        alert(`Lỗi: ${error.message}`);
+        console.log(`Lỗi: ${error.message}`);
       }
     });
   }
+  
   //Đăng xuất
   if (logout) {
     logout.addEventListener("click", async (e) => {

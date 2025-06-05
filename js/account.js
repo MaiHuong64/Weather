@@ -1,14 +1,6 @@
-import { auth } from "../js/config.js";
-import {
-  onAuthStateChanged,
-  updateProfile,
-} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
-import {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL,
-} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-storage.js";
+import { auth } from "./config.js";
+import {onAuthStateChanged, updateProfile,} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+import { getStorage, ref, uploadBytes,  getDownloadURL} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-storage.js";
 
 const storage = getStorage();
 
@@ -61,15 +53,15 @@ async function handleProfileUpdate() {
 
     } catch (error) {
          console.log(error);
-            alert(error);
+            // alert(error);
     }
 };
-document.addEventListener("DOMContentLoaded", async () =>{
-    getInformation();
-    document.getElementById("avatarInput").addEventListener("change",GetAvatar)
-    document.getElementById("accountForm").addEventListener("submit", (e) =>{
-        e.preventDefault();
-        handleProfileUpdate();
-    });
-});
+// document.addEventListener("DOMContentLoaded", async () =>{
+//     getInformation();
+//     document.getElementById("avatarInput").addEventListener("change",GetAvatar)
+//     document.getElementById("accountForm").addEventListener("submit", (e) =>{
+//         e.preventDefault();
+//         handleProfileUpdate();
+//     });
+// });
 
