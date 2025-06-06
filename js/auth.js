@@ -6,9 +6,9 @@ function checkLogin(uid, email, role) {
   const userDropdown = document.getElementById("userDropdown");
   const userName = document.getElementById("userName");
  
-  console.log("guestLinks", guestLinks);
-  console.log("userDropdown", userDropdown);
-  console.log("userName", userName);
+  // console.log("guestLinks", guestLinks);
+  // console.log("userDropdown", userDropdown);
+  // console.log("userName", userName);
 
   if (uid === null || email === null || role === null) 
   {
