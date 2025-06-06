@@ -3,6 +3,9 @@ import { SaveLocation, GetLoCations } from "./locationService.js";
 import { auth } from "./config.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";    
 
+const btnSearch = document.getElementById("btn-Search")
+const btnSave = document.getElementById("btn-SaveLocation");
+
 onAuthStateChanged(auth, async (user) => {
 
     const list = document.getElementById("savedLocationsList");
@@ -31,7 +34,13 @@ onAuthStateChanged(auth, async (user) => {
     }
 });
 
-
-document.getElementById("btn-Search").addEventListener("click", TimKiem);
-document.getElementById('btn-SaveLocation').addEventListener("click", SaveLocation);
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    btnSave.classList.remove("d-none");
+  } else {
+    btnSave.classList.add("d-none");
+  }
+});
+btnSearch.addEventListener("click", TimKiem);
+btnSave.addEventListener("click", SaveLocation);
 
