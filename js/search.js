@@ -1,5 +1,5 @@
-import { displayWeather, clear } from "./changeBackground.js";
-
+import { displayWeather, clear, changeBackGround } from "./weatherDisplay.js";
+import { writeLog } from "./writeLog.js";
 const api_key = "dc135abe71b948b7a13162258252305";
 
 const error = document.getElementById("error");
@@ -14,11 +14,14 @@ async function TimKiem() {
       error.innerHTML = "Vui lòng nhập tên thành phố";
       return;
     }
+
+    writeLog(input);
     clear();
 
     const url = `https://api.weatherapi.com/v1/forecast.json?key=${api_key}&q=${input}&lang=vi`;
     const ketqua = await fetch(url);
     console.log(ketqua);
+    
 
     const data = await ketqua.json();
 
@@ -31,6 +34,8 @@ async function TimKiem() {
     const location = data.location;
     const forecast = data.forecast.forecastday;
     displayWeather(location, current, forecast);
+    changeBackGround(current.condition.text);
+
  
     // Dự báo theo giờ
     const hours = [
