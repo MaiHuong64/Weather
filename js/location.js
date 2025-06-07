@@ -1,5 +1,4 @@
-import { app } from "./config.js";
-import { auth } from "./config.js";
+import { app, auth } from "./config.js";
 import { getFirestore, setDoc, getDoc, doc, arrayUnion} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 
 const db = getFirestore(app);
