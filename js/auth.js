@@ -1,6 +1,6 @@
 function checkLogin(uid, email, role) {
 
-  console.log(uid, email, role);
+  // console.log(uid, email, role);
   
   const guestLinks = document.getElementById("guestLinks");
   const userDropdown = document.getElementById("userDropdown");
