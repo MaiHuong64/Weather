@@ -20,7 +20,7 @@ async function getUser() {
                 <td>${user.name}</td>
                 <td>${user.email}</td>
                 <td>${user.role}</td>
-                // <td><img src="${user.avatar || "default-avatar.png"}" alt="Avatar" style="width:40px; height:40px; border-radius:50%;" /></td>
+                <td><img src="${user.avatar || "default-avatar.png"}" alt="Avatar" style="width:40px; height:40px; border-radius:50%;" /></td>
             `;
             table.appendChild(row);
         });

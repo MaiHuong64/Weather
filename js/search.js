@@ -65,7 +65,7 @@ async function TimKiem() {
 
       dailyForecast.innerHTML += `<div class = "text-center">
                                       <div>${weekday}</div>
-                                      <img src="http:${day.day.condition.icon}" width=36>
+                                      <img src="https:${day.day.condition.icon}" width=36>
                                       <div>${day.day.mintemp_c}° / ${day.day.maxtemp_c}°</div>
                                       </div>`;
     });
