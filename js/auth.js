@@ -17,23 +17,26 @@ function checkLogin(uid, email, role) {
     return;
   } 
 
-  if (role === "admin") 
-  {
-    if (window.location.pathname !== "/admin.html") 
-      window.location.href = "/admin.html";
+  if (role === "admin") {
+    const isAdminPage = window.location.pathname.includes('/admin') || 
+                       window.location.pathname.includes('/logs') || 
+                       window.location.pathname.includes('/users');
+    
+    if (!isAdminPage) {
+      window.location.href = "admin.html";
+    }
   } 
-  else if( role === "user"){
+  else if (role === "user") {
     guestLinks?.classList.add("d-none");
     userDropdown?.classList.remove("d-none");
-    if(userName) userName.textContent = email;
+    if (userName) userName.textContent = email;
     if (window.location.pathname !== "/index.html") 
       window.location.href = "/index.html";
   }
-  else
-  {
+  else {
     guestLinks?.classList.remove("d-none");
     userDropdown?.classList.add("d-none");
   }
-};
+}
 
 export { checkLogin };
