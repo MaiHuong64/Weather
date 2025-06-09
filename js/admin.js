@@ -1,5 +1,9 @@
-import { getUser } from "./users.js"; 
+import { getUsers } from "./users.js"; 
+import { getLogs } from "./logs.js";
 
 window.addEventListener("DOMContentLoaded", async () => {
-    getUser();
+    getUsers();
+});
+window.addEventListener("DOMContentLoaded", async () => {
+    getLogs();
 });

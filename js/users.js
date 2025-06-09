@@ -3,7 +3,7 @@ import { getFirestore, collection, getDocs} from "https://www.gstatic.com/fireba
 
 const db = getFirestore(app);
 
-async function getUser() {
+async function getUsers() {
     try{
         const querySnapshot = await getDocs(collection(db, "user"));
         const table = document.getElementById("user-table");
@@ -20,7 +20,8 @@ async function getUser() {
                 <td>${user.name}</td>
                 <td>${user.email}</td>
                 <td>${user.role}</td>
-                // <td><img src="${user.avatar || "default-avatar.png"}" alt="Avatar" style="width:40px; height:40px; border-radius:50%;" /></td>
+                <td><img src="${user.avatar || 'default-avatar.png'}" alt="Avatar" style="width:40px; height:40px; border-radius:50%;" /></td>
+
             `;
             table.appendChild(row);
         });
@@ -29,4 +30,4 @@ async function getUser() {
         console.error("Error fetching user data:", error);
     }
 }
-export { getUser };
+export { getUsers };
