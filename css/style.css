@@ -113,3 +113,44 @@ body {
   height: 100%;
   text-align: center;
 }
+
+.notification-wrapper {
+  background: #e3f6fd;
+  margin-right: 12px;
+  border: none;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+}
+
+.notification-btn {
+  background: transparent;
+  border: none;
+  outline: none;
+  position: relative;
+  font-size: 1.2rem;
+  margin-right: 8px;
+}
+
+#notification-count {
+  color: #fff;
+  background: #ff6f00;
+  border-radius: 50%;
+  padding: 2px 7px;
+  font-size: 0.8rem;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+}
+
+#notification-dropdown {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  min-width: 260px;
+  background: #e3f6fd;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-radius: 8px;
+  z-index: 1000;
+  padding: 0.5rem 0;
+}

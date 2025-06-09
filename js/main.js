@@ -8,6 +8,8 @@ import { setCookie, getCookie, deleteCookie } from "./cookie.js";
 
 import { checkLogin } from "./auth.js";
 
+import { initNotification } from './notification.js';
+
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -81,6 +83,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
               checkLogin(uid, email, role);
               alert("Đăng nhập thành công!");
+
+              if (user && user.role === 'user') {
+                document.getElementById('notificationWrapper').classList.remove('d-none');
+                await initNotification(user);
+              }
             }
           }
         );
