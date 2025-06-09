@@ -1,10 +1,10 @@
 import { app } from "./config.js";
-import { getFirestore, collection, getDocs} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 
 const db = getFirestore(app);
 
-async function getUsers() {
-    try{
+async function getUser() {
+    try {
         const querySnapshot = await getDocs(collection(db, "user"));
         const table = document.getElementById("user-table");
         
@@ -16,12 +16,10 @@ async function getUsers() {
 
             const row = document.createElement("tr");
             row.innerHTML = `
-                <td>${user.uid}</td>
-                <td>${user.name}</td>
                 <td>${user.email}</td>
+                <td>${user.name}</td>
                 <td>${user.role}</td>
-                <td><img src="${user.avatar || 'default-avatar.png'}" alt="Avatar" style="width:40px; height:40px; border-radius:50%;" /></td>
-
+                // <td><img src="${user.avatar || "default-avatar.png"}" alt="Avatar" style="width:40px; height:40px; border-radius:50%;" /></td>
             `;
             table.appendChild(row);
         });
@@ -30,4 +28,4 @@ async function getUsers() {
         console.error("Error fetching user data:", error);
     }
 }
-export { getUsers };
+export { getUser };
