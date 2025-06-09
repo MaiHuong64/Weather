@@ -8,7 +8,18 @@ export function showChart(labels, data) {
 
   if (tempChart) tempChart.destroy();
 
-  const ctx = document.getElementById('tempChart').getContext('2d');
+  const canvas = document.getElementById('tempChart');
+  if (!canvas) {
+    console.error("Canvas element 'tempChart' not found");
+    return;
+  }
+  
+  if (typeof Chart === 'undefined') {
+    console.error("Chart.js library not loaded");
+    return;
+  }
+  
+  const ctx = canvas.getContext('2d');
   tempChart = new Chart(ctx, {
     type: 'line',
     data: {
