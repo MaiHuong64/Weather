@@ -75,6 +75,9 @@ async function TimKiem() {
     showChart(labels, chartData);
     
     console.log('Weather condition:', current.condition.text);
+
+    document.getElementById('weather-row').classList.remove('d-none');
+    document.getElementById('weather-empty').classList.add('d-none');
   } catch (err) {
     error.innerHTML =
       "Có lỗi không xác định xảy ra khi lấy dữ liệu thời tiết. Vui lòng thử lại.";

@@ -2,8 +2,9 @@ let tempChart = null;
 
 export function showChart(labels, data) {
   document.getElementById('chart-col').classList.remove('d-none');
-  document.getElementById('location-detail-col').classList.remove('text-center');
-  document.getElementById('location-detail-col').classList.add('text-start');
+  const locationDetailCol = document.getElementById('location-detail-col');
+  locationDetailCol.classList.remove('text-center');
+  locationDetailCol.classList.add('text-start');
 
   if (tempChart) tempChart.destroy();
 

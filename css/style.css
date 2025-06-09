@@ -99,8 +99,12 @@ body {
   text-align: left;
 }
 
-#chart-col {
+#location-detail-col {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  justify-content: center;
+  align-items: center; 
+  min-height: 220px;
+  height: 100%;
+  text-align: center;
 }
