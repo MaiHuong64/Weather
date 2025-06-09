@@ -7,10 +7,14 @@ async function SaveLocation() {
   const user = auth.currentUser;
   const cityNameElement = document.getElementById("city");
   if (!cityNameElement) {
-    alert("Nhập tên thành phố dô");
+    alert("Không tìm thấy thành phố");
     return;
   }
   const cityName = cityNameElement.textContent.split("-")[0].trim();
+   if (!cityName) {
+    alert("Tên thành phố không được bỏ trống");
+    return;
+  }
   const userRef = doc(db, "user", user.uid);
   try {
     await setDoc(userRef, { location: arrayUnion(cityName) }, { merge: true });
