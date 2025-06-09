@@ -12,6 +12,16 @@ function clear() {
   detail.innerHTML = "";
   hourlyForecast.innerHTML = "";
   dailyForecast.innerHTML = "";
+
+  const locationDetailCol = document.getElementById('location-detail-col');
+  const chartCol = document.getElementById('chart-col');
+  if (locationDetailCol) {
+    locationDetailCol.classList.remove('text-start');
+    locationDetailCol.classList.add('text-center');
+  }
+  if (chartCol) {
+    chartCol.classList.add('d-none');
+  }
 }
 
 function displayWeather(location, current, forecast) {

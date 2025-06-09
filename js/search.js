@@ -1,6 +1,7 @@
 import { displayWeather, clear, changeBackGround } from "./weatherDisplay.js";
 import { forecastHourly, forecastDaily } from "./forecast.js";
 import { writeLog } from "./writeLog.js";
+import { showChart } from "./chart.js";
 
 export const api_key = "dc135abe71b948b7a13162258252305";
 
@@ -68,6 +69,11 @@ async function TimKiem() {
     changeBackGround(current.condition.text);
     forecastHourly(hourly, hourlyForecast);
     forecastDaily(forecast, dailyForecast); 
+    
+    const labels = hourly.map(h => new Date(h.time).toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" }));
+    const chartData = hourly.map(h => h.temp_c);
+    showChart(labels, chartData);
+    
     console.log('Weather condition:', current.condition.text);
   } catch (err) {
     error.innerHTML =
