@@ -10,10 +10,14 @@ async function writeLog(location) {
         console.log("Người dùng chưa đăng nhập.");
         return;
     }
-    const uid = auth.currentUser.uid;
-    await setDoc(doc(db, "logs", uid + "_" + Date.now()), {
-      uid: uid,
-      name: name,
+      const user = auth.currentUser;
+      console.log(user.displayName);
+      console.log(user.email);
+      console.log(user.photoURL);
+
+    await setDoc(doc(db, "logs", user.uid + "_" + Date.now()), {
+      uid: user.uid,
+      name: user.displayName,
       location: location,
       timestamp: serverTimestamp(),
     });
