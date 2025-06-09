@@ -40,6 +40,7 @@ export function initAutocomplete(onSelect) {
       };
       autocompleteContainer.appendChild(div);
     });
+    autocompleteContainer.classList.add('autocomplete-dropdown');
     autocompleteContainer.style.display = "block";
   }
 

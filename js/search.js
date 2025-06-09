@@ -2,7 +2,7 @@ import { displayWeather, clear, changeBackGround } from "./weatherDisplay.js";
 import { forecastHourly, forecastDaily } from "./forecast.js";
 import { writeLog } from "./writeLog.js";
 
-const api_key = "dc135abe71b948b7a13162258252305";
+export const api_key = "dc135abe71b948b7a13162258252305";
 
 const error = document.getElementById("error");
 const hourlyForecast = document.getElementById("hourly-forecast");
