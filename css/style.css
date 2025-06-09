@@ -92,6 +92,11 @@ body {
   background: #f1f3f9;
 }
 
+.autocomplete-suggestion {
+  background-color: #fff   !important; 
+  color: #222              !important;
+}
+
 #location-detail-col.text-center {
   text-align: center;
 }
