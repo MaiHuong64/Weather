@@ -1,6 +1,7 @@
 import { displayWeather, clear, changeBackGround } from "./weatherDisplay.js";
 import { forecastHourly, forecastDaily } from "./forecast.js";
 import { writeLog } from "./writeLog.js";
+import { showChart } from "./chart.js";
 
 export const api_key = "dc135abe71b948b7a13162258252305";
 
@@ -72,6 +73,15 @@ async function TimKiem() {
     forecastHourly(hourly, hourlyForecast);
     forecastDaily(forecast, dailyForecast); 
     console.log(forecast);
+    
+    const labels = hourly.map(h => new Date(h.time).toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" }));
+    const chartData = hourly.map(h => h.temp_c);
+    showChart(labels, chartData);
+    
+    console.log('Weather condition:', current.condition.text);
+
+    document.getElementById('weather-row').classList.remove('d-none');
+    document.getElementById('weather-empty').classList.add('d-none');
   } catch (err) {
     error.innerHTML =
       "Có lỗi không xác định xảy ra khi lấy dữ liệu thời tiết. Vui lòng thử lại.";
