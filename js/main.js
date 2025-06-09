@@ -8,6 +8,8 @@ import { setCookie, getCookie, deleteCookie } from "./cookie.js";
 
 import { checkLogin } from "./auth.js";
 
+import { Chart } from "https://cdn.jsdelivr.net/npm/chart.js/auto";
+
 document.addEventListener("DOMContentLoaded", () => {
 
   const signup = document.getElementById("registerForm");
