@@ -1,8 +1,9 @@
-import { auth } from "./config.js";
-import {onAuthStateChanged, updateProfile,} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
-import { getStorage, ref, uploadBytes,  getDownloadURL} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-storage.js";
+import { auth, app } from "./config.js";
+import {onAuthStateChanged, updateProfile,} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";;
+import {handleImageSelect} from "./imageUpload.js";
+import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 
-const storage = getStorage();
+const db = getFirestore(app);
 
 async function GetAvatar(e) {
   const file = e.target.files[0];
@@ -33,35 +34,55 @@ async function getInformation() {
 }
 async function handleProfileUpdate() {
     const newName = document.getElementById("name").value.trim();
-    const newAvatar = document.getElementById("avatarInput").files[0];
-    
+    const newAvatar = document.getElementById("avatarInput");
+    const newAvatarFile = newAvatar.files[0];
     const user = auth.currentUser;
 
-    try {
-        let photoURL = user.photoURL;
-         if (newAvatar) {
-            const avatarRef = ref( storage,`avatars/${user.uid}/${newAvatar.name}`);
-            const snapshot = await uploadBytes(avatarRef, newAvatar);
-            photoURL = await getDownloadURL(snapshot.ref);
-        }
-        await updateProfile(user, {
-            displayName: newName,
-            photoURL: photoURL,
-        })
-        alert("Cap nhat thanh cong")
-        location.reload();
+    try{
+      let avatarURL = user.photoURL;
+      if(newAvatarFile) {
+        avatarURL = await handleImageSelect(newAvatar);
+        console.log("Ảnh mới:", avatarURL);
+      }
 
-    } catch (error) {
-         console.log(error);
-            // alert(error);
+      await updateProfile(user, {
+        displayName: newName,
+        photoURL: avatarURL
+      });
+      await updateProfileFirebase(user.uid, newName, avatarURL);
+       alert("Cập nhật thành công");
+      location.reload();
     }
-};
-// document.addEventListener("DOMContentLoaded", async () =>{
-//     getInformation();
-//     document.getElementById("avatarInput").addEventListener("change",GetAvatar)
-//     document.getElementById("accountForm").addEventListener("submit", (e) =>{
-//         e.preventDefault();
-//         handleProfileUpdate();
-//     });
-// });
+    catch(error) {
+        console.error("Error updating profile:", error);
+        alert("Cập nhật thông tin thất bại. Vui lòng thử lại.");
+        return;
+    }
+}
+
+async function updateProfileFirebase(uid, displayName, photoURL) {
+  try{
+      const userRef = doc(db, "user", uid);
+      await updateDoc(userRef, {
+        email: auth.currentUser.email,  
+        name: displayName,
+          avatar: photoURL
+          
+      });
+  }
+  catch(error) {
+    console.error("Error updating profile:", error);
+    alert("Cập nhật thông tin thất bại. Vui lòng thử lại.");
+    return;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", async () =>{
+    getInformation();
+    document.getElementById("avatarInput").addEventListener("change",GetAvatar)
+    document.getElementById("accountForm").addEventListener("submit", (e) =>{
+        e.preventDefault();
+        handleProfileUpdate();
+    });
+});
 

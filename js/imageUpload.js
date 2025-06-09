@@ -1,4 +1,4 @@
-const IMGBB_API_KEY = 'YOUR_API_KEY';
+const IMGBB_API_KEY = '9d96edf88cd1a4f124f6cd2a8fbfffba';
 
 async function uploadToImgBB(file) {
     try {
@@ -40,7 +40,10 @@ async function handleImageSelect(input) {
     }
 
     try {
+        console.log("Uploading to ImgBB...");
         const imageUrl = await uploadToImgBB(file);
+        console.log("Upload thành công:", imageUrl);
+        
         return imageUrl;
     } catch (error) {
         alert('Lỗi khi upload ảnh: ' + error.message);
