@@ -115,7 +115,7 @@ body {
 }
 
 .notification-wrapper {
-  background: #e3f6fd;
+  background-color: inherit;
   margin-right: 12px;
   border: none;
   box-shadow: none;
@@ -145,12 +145,29 @@ body {
 
 #notification-dropdown {
   position: absolute;
-  top: 40px;
-  right: 0;
-  min-width: 260px;
-  background: #e3f6fd;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  border-radius: 8px;
   z-index: 1000;
   padding: 0.5rem 0;
+  top: 110%;
+  border-radius: .75rem;
+  overflow: hidden;
+  background: #f8fcff;
+  right: 0;
+  min-width: 260px;
+  max-width: 260px;
+}
+
+@media (max-width: 768px) {
+  #notification-dropdown {
+    position: fixed;
+    top: 60px;
+    right: 16px;
+    left: auto;
+    width: min-content;
+    max-width: calc(100vw - 32px);
+    min-width: unset;
+  }
+}
+
+.notification-item:hover {
+  background: #e9f3ff;
 }

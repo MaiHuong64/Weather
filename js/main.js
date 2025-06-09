@@ -1,49 +1,51 @@
 import { auth } from "./config.js";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
-import { signOut } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
-
-import { getFirestore, setDoc, getDoc, doc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
-
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+  signOut
+} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+import {
+  getFirestore,
+  setDoc,
+  getDoc,
+  doc
+} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 import { setCookie, getCookie, deleteCookie } from "./cookie.js";
-
 import { checkLogin } from "./auth.js";
+import { initNotification } from "./notification.js";
 
-import { initNotification } from './notification.js';
+document.addEventListener("DOMContentLoaded", async () => {
+  const signupForm = document.getElementById("registerForm");
+  const loginForm = document.getElementById("loginForm");
+  const logoutBtn = document.getElementById("logout");
+  const notificationWrapper = document.getElementById("notificationWrapper");
 
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  const signup = document.getElementById("registerForm");
-  const login = document.getElementById("loginForm");
-  const logout = document.getElementById("logout");
-
-  // đăng ký
-  if (signup) {
-    signup.addEventListener("submit", async (e) => {
+  // Đăng ký
+  if (signupForm) {
+    signupForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-
-      const name = document.getElementById("name").value;
-      const email = document.getElementById("email").value;
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
       const confirmPassword = document.getElementById("confirmPassword").value;
-      if (name == "" || email == "" || password == "" || password !== confirmPassword) {
+      if (!name || !email || !password || password !== confirmPassword) {
         alert("Thông tin đăng ký không hợp lệ");
         return;
       }
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
+        await updateProfile(user, { displayName: name });
 
-        await updateProfile(user, { displayName: name, });
-
-        // Lưu thông tin đăng ký
         const db = getFirestore();
         await setDoc(doc(db, "user", user.uid), {
           avatar: "avatar",
           name: name,
           email: user.email,
-          role: "user",
+          role: "user"
         });
+
         await signOut(auth);
         alert("Đăng ký thành công!");
         window.location.href = "login.html";
@@ -52,54 +54,45 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-  // đăng nhập
-  if (login) {
-    login.addEventListener("submit", async (e) => {
+
+  if (loginForm) {
+    loginForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+      const emailInput = document.getElementById("email").value.trim();
+      const passwordInput = document.getElementById("password").value;
       try {
-        await signInWithEmailAndPassword(auth, email, password).then(
-          async (userCredential) => {
-            const user = userCredential.user;
+        const userCredential = await signInWithEmailAndPassword(auth, emailInput, passwordInput);
+        const user = userCredential.user;
 
-            const db = getFirestore();
-            const docRef = doc(db, "user", user.uid);
-            const docSnap = await getDoc(docRef);
+        const db = getFirestore();
+        const docSnap = await getDoc(doc(db, "user", user.uid));
+        if (docSnap.exists()) {
+          const userData = docSnap.data();
+          setCookie("uid", user.uid, 14);
+          setCookie("email", user.email, 14);
+          setCookie("name", userData.name, 14);
+          setCookie("role", userData.role, 14);
 
-            if (docSnap.exists()) {
-              const userData = docSnap.data();
+          checkLogin(user.uid, user.email, userData.role);
+          alert("Đăng nhập thành công!");
 
-              setCookie("uid", user.uid, 14);
-              setCookie("email", user.email, 14);
-              setCookie("name", userData.displayName, 14);
-              setCookie("role", userData.role, 14);
-
-              console.log("Cookie check:", user.uid, user.email, userData.role);
-
-              const uid = getCookie("uid");
-              const email = getCookie("email");
-              const role = getCookie("role");
-
-              checkLogin(uid, email, role);
-              alert("Đăng nhập thành công!");
-
-              if (user && user.role === 'user') {
-                document.getElementById('notificationWrapper').classList.remove('d-none');
-                await initNotification(user);
-              }
-            }
+          if (userData.role === "user" && notificationWrapper) {
+            notificationWrapper.classList.remove("d-none");
+            await initNotification(user.uid);
           }
-        );
+
+          window.location.href = "index.html";
+        } else {
+          alert("Không tìm thấy thông tin người dùng.");
+        }
       } catch (error) {
-        console.log(`Lỗi: ${error.message}`);
+        alert(`Lỗi: ${error.message}`);
       }
     });
   }
 
-  //Đăng xuất
-  if (logout) {
-    logout.addEventListener("click", async (e) => {
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async (e) => {
       e.preventDefault();
       try {
         await signOut(auth);
@@ -108,7 +101,6 @@ document.addEventListener("DOMContentLoaded", () => {
         deleteCookie("name");
         deleteCookie("role");
         alert("Đã đăng xuất");
-        location.reload();
         window.location.href = "login.html";
       } catch (error) {
         alert(`Lỗi khi đăng xuất: ${error.message}`);
@@ -119,6 +111,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const uid = getCookie("uid");
   const email = getCookie("email");
   const role = getCookie("role");
-
   checkLogin(uid, email, role);
+
+  if (uid && role === "user" && notificationWrapper) {
+    notificationWrapper.classList.remove("d-none");
+    await initNotification(uid);
+  }
 });

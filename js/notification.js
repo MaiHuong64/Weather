@@ -1,68 +1,98 @@
 import { GetLoCations } from './location.js';
+import { TimKiem } from './search.js';
+import { api_key } from './search.js';
 
-async function fetchFavoriteLocations(user) {
-  // Lấy từ Firestore
-  return await GetLoCations(user);
+function searchWeather(location) {
+  const searchInput = document.getElementById('timkiem');
+  if (searchInput) {
+    searchInput.value = location;
+    TimKiem();
+  }
 }
 
-async function fetchWeather(location) {
-  // Gọi API thời tiết
-  const res = await fetch(`https://api.weatherapi.com/v1/current.json?key=API_KEY&q=${encodeURIComponent(location)}`);
+async function fetchFavoriteLocations(userId) {
+  try {
+    const locations = await GetLoCations(userId);
+    return locations.map(location => ({
+      name: location,
+      q: location
+    }));
+  } catch (error) {
+    console.error("Error fetching favorite locations:", error);
+    return [];
+  }
+}
+
+async function fetchWeather(q) {
+  const url = `https://api.weatherapi.com/v1/current.json?key=${api_key}&q=${encodeURIComponent(q)}&lang=vi`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('Weather API error');
   return await res.json();
 }
 
-function getWeatherNotification(location, weatherData) {
-  const condition = weatherData.current.condition.text;
-  if (["Sunny", "Clear"].includes(condition)) {
-    return `${location} hôm nay trời nắng đẹp!`;
+function getWeatherNotification(name, data) {
+  const { condition, temp_c, wind_kph } = data.current;
+  const code = condition.code;
+
+  if (code === 1000 && temp_c >= 23 && temp_c <= 32) {
+    return { title: 'Trời nắng đẹp ☀', msg: `${name} hôm nay trời quang, ${temp_c}°C.` };
   }
-  if (["Rain", "Thunderstorm", "Storm"].some(x => condition.includes(x))) {
-    return `${location} có mưa/bão, chú ý an toàn!`;
+  if ((code >= 1180 && code < 1200) || code >= 1273) {
+    return { title: 'Cảnh báo mưa/bão ⚠', msg: `${name} có mưa, gió ${wind_kph} km/h. Mang áo mưa nhé!` };
   }
   return null;
 }
 
-async function loadNotifications(user) {
-  const locations = await fetchFavoriteLocations(user);
+export async function initNotification(userId) {
+  setupNotificationEvents();
+  const locations = await fetchFavoriteLocations(userId);
+  const weatherArr = await Promise.all(
+    locations.map(l => fetchWeather(l.q).catch(() => null))
+  );
+
   const notifications = [];
-  for (const loc of locations) {
-    const data = await fetchWeather(loc);
-    const msg = getWeatherNotification(loc, data);
-    if (msg) notifications.push({ location: loc, message: msg });
-    if (notifications.length >= 10) break;
-  }
-  renderNotifications(notifications);
+  weatherArr.forEach((data, idx) => {
+    if (!data) return;
+    const note = getWeatherNotification(locations[idx].name, data);
+    if (note) notifications.push({ location: locations[idx].name, ...note });
+  });
+
+  renderNotifications(notifications.slice(0, 10));
 }
 
-function renderNotifications(notifications) {
-  const count = notifications.length;
-  document.getElementById('notification-count').textContent = count > 0 ? count : '';
-  const dropdown = document.getElementById('notification-dropdown');
-  dropdown.innerHTML = notifications.length === 0
+function renderNotifications(list) {
+  const badge = document.getElementById('notification-count');
+  const dropBox = document.getElementById('notification-dropdown');
+
+  badge.textContent = list.length > 0 ? list.length : '';
+  badge.classList.toggle('d-none', list.length === 0);
+
+  dropBox.innerHTML = list.length === 0
     ? '<div class="px-3 py-2 text-muted">Không có thông báo mới</div>'
-    : notifications.map((n, i) =>
-        `<div class="px-3 py-2 notification-item" data-location="${n.location}" style="cursor:pointer;">
-          ${n.message}
-        </div>`).join('');
+    : list.map(n => {
+        const time = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+        return `
+        <div class="notification-item px-3 py-2" data-location="${n.location}" style="cursor:pointer;">
+          <div><strong>${n.title}</strong></div>
+          <div class="small">${n.msg}</div>
+          <div class="small text-muted">${time}</div>
+        </div>`;
+      }).join('');
 }
 
 function setupNotificationEvents() {
   const btn = document.getElementById('notification-btn');
   const dropdown = document.getElementById('notification-dropdown');
   if (!btn || !dropdown) return;
-  btn.onclick = function() {
-    dropdown.classList.toggle('d-none');
-  };
-  dropdown.onclick = function(e) {
-    if (e.target.classList.contains('notification-item')) {
-      const location = e.target.getAttribute('data-location');
-      searchWeather(location);
-      this.classList.add('d-none');
-    }
-  };
-}
 
-export async function initNotification(user) {
-  setupNotificationEvents();
-  await loadNotifications(user);
+  btn.addEventListener('click', () => dropdown.classList.toggle('d-none'));
+
+  dropdown.addEventListener('click', e => {
+    const target = e.target.closest('.notification-item');
+    if (!target) return;
+
+    const loc = target.getAttribute('data-location');
+    dropdown.classList.add('d-none');
+    searchWeather(loc);
+  });
 }
