@@ -2,17 +2,16 @@ import { displayWeather, clear, changeBackGround } from "./weatherDisplay.js";
 import { forecastHourly, forecastDaily } from "./forecast.js";
 import { writeLog } from "./writeLog.js";
 
-
 const api_key = "dc135abe71b948b7a13162258252305";
 
 const error = document.getElementById("error");
 const hourlyForecast = document.getElementById("hourly-forecast");
 const dailyForecast = document.getElementById("daily-forecast");
-
+const searchInput = document.getElementById("timkiem");
 
 async function TimKiem() {
   try {
-    const input = encodeURIComponent(document.getElementById("timkiem").value);
+    const input = searchInput.value.trim();
     if (!input) {
       error.innerHTML = "Vui lòng nhập tên thành phố";
       return;
@@ -21,15 +20,23 @@ async function TimKiem() {
     writeLog(input);
     clear();
 
-    const url = `https://api.weatherapi.com/v1/forecast.json?key=${api_key}&q=${input}&days=3&lang=vi`;
+    const url = `https://api.weatherapi.com/v1/forecast.json?key=${api_key}&q=${encodeURIComponent(input)}&days=3&lang=vi`;
+    console.log('API URL:', url);
     const ketqua = await fetch(url);
-    console.log(ketqua);
+    console.log('API Response status:', ketqua.status);
     
-
     const data = await ketqua.json();
+    console.log('Location data:', {
+      name: data.location?.name,
+      region: data.location?.region,
+      country: data.location?.country,
+      lat: data.location?.lat,
+      lon: data.location?.lon
+    });
 
     if (data.error) {
       error.innerHTML = "Không tìm thấy thành phố! Vui lòng nhập lại";
+      console.log('API Error:', data.error);
       return;
     }
 

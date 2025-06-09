@@ -2,6 +2,8 @@ import { TimKiem } from "./search.js";
 import { SaveLocation, GetLoCations } from "./location.js"; 
 import { auth } from "./config.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";    
+import { initAutocomplete } from "./autocomplete.js";
+
 const btnSearch = document.getElementById("btn-Search")
 const btnSave = document.getElementById("btn-SaveLocation");
 
@@ -40,6 +42,8 @@ onAuthStateChanged(auth, (user) => {
     btnSave.classList.add("d-none");
   }
 });
+initAutocomplete(() => TimKiem());
+
 btnSearch.addEventListener("click", TimKiem);
 btnSave.addEventListener("click", SaveLocation);
 
