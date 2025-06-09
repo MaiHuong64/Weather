@@ -17,7 +17,7 @@ async function writeLog(location) {
 
     await setDoc(doc(db, "logs", user.uid + "_" + Date.now()), {
       uid: user.uid,
-      name: user.displayName,
+      name: user.displayName || user.email,
       location: location,
       timestamp: serverTimestamp(),
     });

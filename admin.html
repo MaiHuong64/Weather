@@ -21,11 +21,31 @@
         <a id="logout" class="btn btn-sm btn-outline-dark mt-2" href="#">Đăng xuất</a>
       </nav>
 
-      <main class="col-md-9 col-lg-10 main">
-        <h2 class="mb-3">📍 Top địa điểm tra cứu</h2>
-        <ul class="top-list" id="top-cities">
-        </ul>
-      </main>
+     <main class="col-md-9 col-lg-10 main">
+      <h2 class="mb-3">📊 Thống kê tổng quan</h2>
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">📅 Lượt tra cứu tuần qua</h5>
+              <p class="card-text fs-4 fw-bold" id="weekly-search-count">0</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">👥 Số người dùng</h5>
+              <p class="card-text fs-4 fw-bold" id="user-count">0</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="mb-3">📍 Top địa điểm tra cứu</h2>
+      <ul class="top-list" id="top-cities"></ul>
+    </main>
+
     </div>
   </div>
   <script type="module" src="js/admin.js"></script>
