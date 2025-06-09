@@ -1,0 +1,39 @@
+ body {
+      background: #f0f4f8;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .weather-card {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .forecast-item {
+      min-width: 110px;
+      background-color: #e3f2fd;
+      margin-right: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+      flex-shrink: 0;
+    }
+    .forecast-item img {
+      margin: 6px 0;
+    }
+    #hourly-forecast,
+    #daily-forecast {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+    }
+    #hourly-forecast::-webkit-scrollbar,
+    #daily-forecast::-webkit-scrollbar {
+      height: 8px;
+    }
+    #hourly-forecast::-webkit-scrollbar-thumb,
+    #daily-forecast::-webkit-scrollbar-thumb {
+      background: #bbb;
+      border-radius: 4px;
+    }

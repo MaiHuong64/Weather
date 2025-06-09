@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Danh sách địa điểm đã lưu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-light bg-light border-bottom px-3">
+      <a href="index.html" class="navbar-brand fw-bold text-primary">🌤️ Thời tiết</a>
+    </nav>
+
+    <main class="flex-fill py-4">
+      <div class="container">
+        <h3 class="mb-4">📍 Danh sách địa điểm đã lưu</h3>
+        <ul id="savedLocationsList" class="list-group"></ul>
+        <p id="noLocations" class="text-muted mt-3 d-none">Bạn chưa lưu địa điểm nào</p>
+      </div>
+    </main>
+
+    <footer class="text-center py-3 mt-auto border-top">
+      <div class="container">
+        <p class="mb-0">&copy; 2025 Dự báo thời tiết</p>
+      </div>
+    </footer>
+    
+  </body>
+  <script type="module" src="js/script.js"></script>
+</html>
