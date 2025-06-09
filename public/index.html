@@ -29,6 +29,16 @@
           <a href="register.html" class="btn btn-primary">Đăng ký</a>
         </div>
 
+        <div id="notificationWrapper" class="position-relative d-inline-block notification-wrapper">
+          <button id="notification-btn" class="btn p-0 border-0 bg-transparent">
+            🔔
+            <span id="notification-count"
+              class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle d-none"></span>
+          </button>
+
+          <div id="notification-dropdown" class="p-0 shadow d-none"></div>
+        </div>
+
         <div id="userDropdown" class="dropdown d-none">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
             data-bs-toggle="dropdown" aria-expanded="false">
@@ -80,8 +90,8 @@
           </div>
         </div>
         <div id="weather-empty" class="mt-3 text-center">
-          <div class="lead text-muted">Vui lòng nhập tên thành phố để xem thời tiết.</div>
-          <button id="btn-SaveLocation" class="btn btn-outline-warning d-none">🌟 Lưu địa điểm</button>
+          <div id="weather-message" class="lead text-muted">Vui lòng nhập tên thành phố để xem thời tiết.</div>
+          <button id="btn-SaveLocation" class="btn btn-outline-warning">🌟 Lưu địa điểm</button>
         </div>
       </div>
 
@@ -96,6 +106,7 @@
         <h5 class="mb-3">📅 Dự báo theo ngày</h5>
         <div id="daily-forecast" class="d-flex overflow-auto flex-nowrap px-3"></div>
       </div>
+
     </div>
   </main>
 
@@ -110,6 +121,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script type="module" src="js/script.js"></script>
   <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/notification.js"></script>
 </body>
 
 </html>
