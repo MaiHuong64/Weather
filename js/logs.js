@@ -27,8 +27,8 @@ if (!table) {
 
             const row = document.createElement("tr");
            row.innerHTML = `
-                <td>${log.userId}</td>
-                <td>${log.location}</td>
+                <td>${log.name}</td>
+                <td>${decodeURIComponent(log.location)}</td>
                 <td>${log.timestamp.toDate().toLocaleString()}</td>
             `;
 

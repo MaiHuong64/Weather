@@ -1,9 +1,19 @@
 import { api_key } from './search.js';
 
-export function initAutocomplete(onSelect) {
+export async function initAutocomplete(onSelect) {
   const searchInput = document.getElementById("timkiem");
   const autocompleteContainer = document.getElementById("autocomplete-container");
   let searchTimeout;
+
+  let provinceTranslations = {};
+  let districtToRegionMap = {}
+
+  const data = await fetch("../DuLieuMau/districtToRegionMap.json");
+  districtToRegionMap = await data.json();
+
+  const res = await fetch("../DuLieuMau/provinceTranslations.json");
+  provinceTranslations = await res.json();
+  console.log(provinceTranslations)
 
   async function searchLocations(query) {
     try {
@@ -32,9 +42,15 @@ export function initAutocomplete(onSelect) {
         cursor: pointer;
         border-bottom: 1px solid #eee;
       `;
-      div.textContent = `${result.name}, ${result.country}`;
+
+      const region = provinceTranslations[result.region] || result.region;
+      const country = result.country;
+      div.textContent = `${result.name}, ${country}`;
+
       div.onclick = () => {
-        searchInput.value = result.name;
+        
+        const fullLabel = `${result.name}, ${country}`;
+        searchInput.value = fullLabel;
         autocompleteContainer.style.display = "none";
         if (onSelect) onSelect(result);
       };

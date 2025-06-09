@@ -13,7 +13,7 @@ async function TimKiem() {
   try {
     const input = searchInput.value.trim();
    
-    const invalidCharPattern = /[^a-zA-ZÀ-ỹà-ỹ\s\-']/u;
+    // const invalidCharPattern = /[^a-zA-ZÀ-ỹà-ỹ\s\-']/u;
     if (!input) {
       error.innerHTML = "Vui lòng nhập tên thành phố";
       return;
@@ -22,10 +22,10 @@ async function TimKiem() {
       error.innerHTML = "Tên thành phố quá dài. Vui lòng nhập tối đa 50 ký tự.";
       return;
     }
-    if (invalidCharPattern.test(input)) {
-      error.innerHTML = "Tên thành phố chứa ký tự không hợp lệ.";
-      return;
-    }
+    // if (invalidCharPattern.test(input)) {
+    //   error.innerHTML = "Tên thành phố chứa ký tự không hợp lệ.";
+    //   return;
+    // }
 
     writeLog(input);
     clear();
@@ -61,6 +61,9 @@ async function TimKiem() {
     }
     const current = data.current;
     const location = data.location;
+    const { name, region, country } = location;
+
+    console.log(`${name} → ${region || "(không có vùng)"} → ${country}`);
     const forecast = data.forecast.forecastday;
     const hourly = data.forecast.forecastday[0].hour;
 
@@ -68,7 +71,7 @@ async function TimKiem() {
     changeBackGround(current.condition.text);
     forecastHourly(hourly, hourlyForecast);
     forecastDaily(forecast, dailyForecast); 
-    console.log('Weather condition:', current.condition.text);
+    console.log(forecast);
   } catch (err) {
     error.innerHTML =
       "Có lỗi không xác định xảy ra khi lấy dữ liệu thời tiết. Vui lòng thử lại.";

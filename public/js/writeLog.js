@@ -13,6 +13,7 @@ async function writeLog(location) {
     const uid = auth.currentUser.uid;
     await setDoc(doc(db, "logs", uid + "_" + Date.now()), {
       uid: uid,
+      name: name,
       location: location,
       timestamp: serverTimestamp(),
     });
