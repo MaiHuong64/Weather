@@ -7,6 +7,10 @@ async function getLogs() {
     try {
         const querySnapshot = await getDocs(collection(db, "logs"));
         const table = document.getElementById("log-table");
+if (!table) {
+    console.error("Table element with ID 'log-table' not found");
+    return;
+}
 
         console.log("Dữ liệu lấy được:", querySnapshot.size);
 
