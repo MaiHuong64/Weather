@@ -12,6 +12,9 @@ function clear() {
   detail.innerHTML = "";
   hourlyForecast.innerHTML = "";
   dailyForecast.innerHTML = "";
+
+  document.getElementById('weather-row').classList.add('d-none');
+  document.getElementById('weather-empty').classList.remove('d-none');
 }
 
 function displayWeather(location, current, forecast) {

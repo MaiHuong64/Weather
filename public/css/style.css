@@ -92,3 +92,19 @@ body {
   background: #f1f3f9;
 }
 
+#location-detail-col.text-center {
+  text-align: center;
+}
+#location-detail-col.text-start {
+  text-align: left;
+}
+
+#location-detail-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; 
+  min-height: 220px;
+  height: 100%;
+  text-align: center;
+}

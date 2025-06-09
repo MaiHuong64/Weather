@@ -8,6 +8,7 @@ import { setCookie, getCookie, deleteCookie } from "./cookie.js";
 
 import { checkLogin } from "./auth.js";
 
+
 document.addEventListener("DOMContentLoaded", () => {
 
   const signup = document.getElementById("registerForm");
