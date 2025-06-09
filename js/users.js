@@ -19,12 +19,7 @@ async function getUser() {
                 <td>${user.email}</td>
                 <td>${user.name}</td>
                 <td>${user.role}</td>
-                <td>${user.location || 'Chưa cập nhật'}</td>
-                <td>
-                    <img src="${user.avatar || 'https://via.placeholder.com/40'}" 
-                         alt="Avatar" 
-                         style="width:40px; height:40px; border-radius:50%;" />
-                </td>
+                // <td><img src="${user.avatar || "default-avatar.png"}" alt="Avatar" style="width:40px; height:40px; border-radius:50%;" /></td>
             `;
             table.appendChild(row);
         });
@@ -33,5 +28,4 @@ async function getUser() {
         console.error("Error fetching user data:", error);
     }
 }
-
 export { getUser };

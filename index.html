@@ -21,9 +21,7 @@
           aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-
-        <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
-        
+          <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
           <div id="guestLinks" class="d-flex gap-2">
             <a href="login.html" class="btn btn-outline-primary">Đăng nhập</a>
             <a href="register.html" class="btn btn-primary">Đăng ký</a>
@@ -43,10 +41,9 @@
             </ul>
           </div>
           
-        </div>
+          </div>
       </div>
     </nav>
-
     <!-- Main -->
     <main class="flex-fill">
       <div class="container py-5">
@@ -61,7 +58,6 @@
             <div id="error" class="text-danger mt-2"></div>
           </div>
         </div>
-
         <!-- Current weather -->
         <div class="weather-card text-center">
           <div id="city" class="mb-2">--</div>
@@ -71,16 +67,16 @@
               <button id="btn-SaveLocation" class="btn btn-outline-warning d-none">🌟 Lưu địa điểm</button>
             </div>
         </div>
-
+          <!-- Hourly Forecast -->
         <div class="weather-card">
           <h5 class="mb-3">⏰ Dự báo theo giờ</h5>
-          <div id="hourly-forecast"></div>
+          <div id="hourly-forecast" class="d-flex overflow-auto flex-nowrap px-3"></div>
         </div>
 
         <!-- Daily Forecast -->
         <div class="weather-card">
           <h5 class="mb-3">📅 Dự báo theo ngày</h5>
-          <div id="daily-forecast"></div>
+          <div id="daily-forecast" class="d-flex overflow-auto flex-nowrap px-3"></div>
         </div>
       </div>
     </main>
@@ -91,14 +87,10 @@
         <p class="mb-1">&copy; 2025 Dự báo thời tiết. Mọi quyền được bảo lưu.</p>
       </div>
     </footer>
-
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   
     <script type="module" src="js/script.js"></script>
     <script type="module" src="js/main.js"></script>
-    <script type="module" src="js/auth.js"></script>
-    <!-- <script type="module" src="js/location.js"></script> -->
   </body>
 </html>
