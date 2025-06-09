@@ -42,7 +42,7 @@ async function TimKiem() {
     changeBackGround(current.condition.text);
     forecastHourly(hourly, hourlyForecast);
     forecastDaily(forecast, dailyForecast); 
-
+    console.log('Weather condition:', current.condition.text);
  
     
   } catch (error) {
