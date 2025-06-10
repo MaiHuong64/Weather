@@ -1,6 +1,10 @@
 import { GetLoCations } from './location.js';
 import { TimKiem } from './search.js';
 import { api_key } from './search.js';
+import { app } from "./config.js";
+import { getFirestore, getDoc, doc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+
+const db = getFirestore(app);
 
 function searchWeather(location) {
   const searchInput = document.getElementById('timkiem');
@@ -31,33 +35,35 @@ async function fetchWeather(q) {
 }
 
 function getWeatherNotification(name, data) {
-  const { condition, temp_c, wind_kph } = data.current;
-  const code = condition.code;
+   const { condition, temp_c, wind_kph } = data.current;
 
-  if (code === 1000 && temp_c >= 23 && temp_c <= 32) {
-    return { title: 'Trời nắng đẹp ☀', msg: `${name} hôm nay trời quang, ${temp_c}°C.` };
-  }
-  if ((code >= 1180 && code < 1200) || code >= 1273) {
-    return { title: 'Cảnh báo mưa/bão ⚠', msg: `${name} có mưa, gió ${wind_kph} km/h. Mang áo mưa nhé!` };
-  }
-  return null;
+  return {
+    title: `Thời tiết tại ${name}`,
+    msg: `Trạng thái: ${condition.text}, Nhiệt độ: ${temp_c}°C, Gió: ${wind_kph} km/h`
+  };
 }
 
 export async function initNotification(userId) {
   setupNotificationEvents();
-  const locations = await fetchFavoriteLocations(userId);
-  const weatherArr = await Promise.all(
-    locations.map(l => fetchWeather(l.q).catch(() => null))
-  );
 
-  const notifications = [];
-  weatherArr.forEach((data, idx) => {
-    if (!data) return;
-    const note = getWeatherNotification(locations[idx].name, data);
-    if (note) notifications.push({ location: locations[idx].name, ...note });
-  });
+  const userRef = doc(db, "user", userId);
+  const docSnap = await getDoc(userRef);
+  const defaultLocation = docSnap.exists() ? docSnap.data().defaultLocation : null;
 
-  renderNotifications(notifications.slice(0, 10));
+  if (!defaultLocation) {
+    renderNotifications([]); // Không có địa điểm mặc định → không có thông báo
+    return;
+  }
+
+  const weatherData = await fetchWeather(defaultLocation).catch(() => null);
+  if (!weatherData) {
+    renderNotifications([]); // lỗi khi lấy API
+    return;
+  }
+  const note = getWeatherNotification(defaultLocation, weatherData);
+  const notifications = note ? [{ location: defaultLocation, ...note }] : [];
+
+  renderNotifications(notifications);
 }
 
 function renderNotifications(list) {

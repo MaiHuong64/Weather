@@ -5,15 +5,15 @@ export async function initAutocomplete(onSelect) {
   const autocompleteContainer = document.getElementById("autocomplete-container");
   let searchTimeout;
 
-  let provinceTranslations = {};
-  let districtToRegionMap = {}
+  // let provinceTranslations = {};
+  // let districtToRegionMap = {}
 
-  const data = await fetch("../DuLieuMau/districtToRegionMap.json");
-  districtToRegionMap = await data.json();
+  // const data = await fetch("../DuLieuMau/districtToRegionMap.json");
+  // districtToRegionMap = await data.json();
 
-  const res = await fetch("../DuLieuMau/provinceTranslations.json");
-  provinceTranslations = await res.json();
-  console.log(provinceTranslations)
+  // const res = await fetch("../DuLieuMau/provinceTranslations.json");
+  // provinceTranslations = await res.json();
+  // console.log(provinceTranslations)
 
   async function searchLocations(query) {
     try {
@@ -43,7 +43,7 @@ export async function initAutocomplete(onSelect) {
         border-bottom: 1px solid #eee;
       `;
 
-      const region = provinceTranslations[result.region] || result.region;
+      // const region = provinceTranslations[result.region] || result.region;
       const country = result.country;
       div.textContent = `${result.name}, ${country}`;
 
