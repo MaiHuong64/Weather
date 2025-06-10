@@ -69,4 +69,27 @@ async function GetLoCations(userOrId) {
   }
 }
 
-export { SaveLocation, GetLoCations };
+async function SetDefaultLocation(userOrId, cityName) {
+   let userId;
+  
+  // Handle both user object and user ID string
+  if (typeof userOrId === 'string') {
+    userId = userOrId;
+  } else if (userOrId && userOrId.uid) {
+    userId = userOrId.uid;
+  } else {
+    console.error("Người dùng không hợp lệ:", userOrId);
+    return [];
+  }
+
+  const userRef = doc(db, "user", userId);
+  try {
+    await setDoc(userRef, { defaultLocation: cityName }, { merge: true });
+    alert("Đã đặt " + cityName + " làm mặc định");
+  } catch (error) {
+    console.error("Lỗi khi đặt mặc định:", error);
+    alert("Không thể đặt mặc định: " + error.message);
+  }
+}
+
+export { SaveLocation, GetLoCations, SetDefaultLocation };
