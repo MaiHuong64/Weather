@@ -91,7 +91,10 @@ function getBackgroundTheme(weatherText) {
     },
   ];
 
-  const text = weatherText.toLowerCase();
+  const normalize = (str) =>
+  str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+  const text = normalize(weatherText);
 
   for (const entry of themeMap) {
     if (entry.keywords.some((kw) => text.includes(kw))) {
