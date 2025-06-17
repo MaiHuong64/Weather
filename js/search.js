@@ -14,7 +14,7 @@ async function TimKiem() {
   try {
     const input = searchInput.value.trim();
    
-    // const invalidCharPattern = /[^a-zA-ZÀ-ỹà-ỹ\s\-']/u;
+    const invalidCharPattern = /[^a-zA-ZÀ-ỹà-ỹ\s\-']/u;
     if (!input) {
       error.innerHTML = "Vui lòng nhập tên thành phố";
       return;
@@ -23,10 +23,10 @@ async function TimKiem() {
       error.innerHTML = "Tên thành phố quá dài. Vui lòng nhập tối đa 50 ký tự.";
       return;
     }
-    // if (invalidCharPattern.test(input)) {
-    //   error.innerHTML = "Tên thành phố chứa ký tự không hợp lệ.";
-    //   return;
-    // }
+    if (invalidCharPattern.test(input)) {
+      error.innerHTML = "Tên thành phố chứa ký tự không hợp lệ.";
+      return;
+    }
 
     writeLog(input);
     clear();

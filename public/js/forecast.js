@@ -26,7 +26,7 @@ function forecastDaily(days, dailyForecast) {
                         month: "numeric",
                         day: "numeric",
                     })}</h5>
-                    <img src="http:${day.day.condition.icon}" width="40" />
+                    <img src="http:${day.day.condition.icon}" class="weather-icon mx-auto my-2" width="40" />
                     <p class="mt-2">${day.day.mintemp_c}°C / ${day.day.maxtemp_c}°C</p>
                 </div>
             </div>`;
